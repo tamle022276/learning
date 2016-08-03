@@ -1,0 +1,870 @@
+/qd0047/tl151006/quantum/sitq/branches/15.10-archive/task/tl151006/load
+
+/qd0042/quantum/quantum_run/harness/src/perl/pl/driver <--- Quatum drivers
+
+svn commit -m "[TQST-74] export uda2c to scan jmeter logs"
+
+tbuild -f item_ldi_export.tpt -u "TdpId='hela', UserName='sit_ldi_pll_user1', UserPassword='sit_ldi_pll_user1', DirectoryPath='/qd0047/tl151006/jmeter/tests/ldi_and_pll_test/tpt', FileName='tam.dat', TraceLevel='none'"
+
+.set width 10000
+.SET FOLDLINE ON ALL
+.SET SIDETITLES ON
+
+
+:%s/FindMe/ReplaceME/g
+
+/** How to create branch ***/
+svn checkout https://continuum.td.teradata.com/svn_repos/quantum/test_assets_unsupported_sit sit-all
+
+cd /qd0051/quantum/quantum_run/tl151006/sit-all
+
+/** create new branch ***/
+
+svn cp https://continuum.td.teradata.com/svn_repos/quantum/test_assets_unsupported_sit/trunk  https://continuum.td.teradata.com/svn_repos/quantum/test_assets_unsupported_sit/branches/15.10 -m "new 15.10 branch"
+
+
+create new test in trun and created new trunk 
+
+svn copy https://continuum.td.teradata.com/svn_repos/quantum/test_assets_unsupported_sit/trunk https://continuum.td.teradata.com/svn_repos/quantum/test_assets_unsupported_sit/branches/new -m "test branch"
+
+
+svn copy http://svn.example.com/repos/calc/trunk \
+           http://svn.example.com/repos/calc/branches/my-calc-branch \
+           -m "Creating a private branch of /calc/trunk."
+
+
+svn update to get new branches
+
+
+now go to trunk and edit some code.... then commit the code and get revision unmber, in this case 1137196.
+
+
+then run this diff command to see the different between this revision and last
+
+cd /qd0051/quantum/quantum_run/tl151006/sit-all/trunk/task/test
+
+# svn diff -c 1137196
+
+or see differnt between file from trunk and branch....
+
+diff test.txt /qd0051/quantum/quantum_run/tl151006/sit-all/branches/15.test/task/test/test.txt
+
+
+view what changes
+svn log -v test.txt
+1137290
+
+
+1. Find the revision number on trunk that you want to merge into the branch
+Example:
+Transmitting file data .
+Committed revision 1137377
+
+2. Check out the branch to your local machine
+Ex: svn checkout https://continuum.td.teradata.com/svn_repos/quantum/test_assets_unsupported_sit/branches/15.00/active 15
+
+3. cd to the branch directory on your machine
+Ex: cd /qd0051/quantum/quantum_run/tl151006/sit-all/branches/15.test/task/test
+or cd /qd0051/quantum/quantum_run/tl151006/sit-all/branches/2015/task/test
+or cd /qd0051/quantum/quantum_run/tl151006/sit-all/branches/new/task/test
+
+4. make the call: svn merge -c [revision_number] [trunk directory]
+Ex: svn merge -c 1137420 /qd0051/quantum/quantum_run/tl151006/15.10-trunk/task/test
+
+or svn merge -c 1137380 -c 1137382 /qd0051/quantum/quantum_run/tl151006/15.10-trunk/task/test
+
+-c gets the differences between the files in the revision you specify and the one before.  It will then try to merge these changes into the branch.
+
+
+5. svn commit
+
+
+6. See what merge
+svn propget svn:mergeinfo 
+
+
+7. Revert
+- view what changes
+svn log -v test.txt
+- svn merge -r HEAD:1137419 .   <--- last revision + current direcotry 
+
+/*** Conflict ***/
+1. only update branch and commit
+2. update branch and commit
+3. go to branch and merge then see this error
+Conflict discovered in '/qd0051/quantum/quantum_run/tl151006/sit-all/branches/2015/task/test/test.txt'.
+Select: (p) postpone, (df) diff-full, (e) edit,
+        (mc) mine-conflict, (tc) theirs-conflict,
+        (s) show all options:
+
+
+
+/test_assets_unsupported_sit/branches/15.test/task/test:1137269
+/test_assets_unsupported_sit/branches/15.test/task/test/trunk/task/test:1137265
+/test_assets_unsupported_sit/trunk/task/test:1137290,1137310
+
+1137382
+
+
+
+Search and replace all files (including hidden ones) in this and all subdirectories
+
+/* search for foo and replace with bar **/
+find . -type f -exec sed -i 's/foo/bar/g' {} +
+
+
+
+Int Field 
+198.  DisableTDWMSessionRules = FALSE       (Enabled if TDWM active)
+
+
+CREATE SET TABLE TAM.gdo_changes ,NO FALLBACK ,
+     NO BEFORE JOURNAL,
+     NO AFTER JOURNAL,
+     CHECKSUM = DEFAULT,
+     DEFAULT MERGEBLOCKRATIO
+     (
+      category VARCHAR(30) CHARACTER SET LATIN NOT CASESPECIFIC,
+      subcategory VARCHAR(50) CHARACTER SET LATIN NOT CASESPECIFIC,
+      attributeName VARCHAR(50) CHARACTER SET LATIN NOT CASESPECIFIC,
+      attributeValue  VARCHAR(50) CHARACTER SET LATIN NOT CASESPECIFIC)
+UNIQUE PRIMARY INDEX ( category, subcategory, attributeName,  attributeValue);
+
+
+insert into TAM.gdo_changes values ('dbscontrol', 'General','79. EnableLogonsMsg','TRUE');
+insert into TAM.gdo_changes values ('dbscontrol', 'General','54. AccessLockForUncomRead','TRUE');
+insert into TAM.gdo_changes values ('dbscontrol', 'General','46. MaxLoadAWT','48');
+
+
+insert into TAM.gdo_changes values ('dbscontrol', 'Performance','4.  MaxParseTreeSegs','2000');
+insert into TAM.gdo_changes values ('dbscontrol', 'Performance','13.  PPICacheThrP','10');
+insert into TAM.gdo_changes values ('dbscontrol', 'Performance','14.  ReadLockOnly','TRUE');
+
+insert into TAM.gdo_changes values ('ctl', 'dbs','FSG cache Percent','79');
+insert into TAM.gdo_changes values ('ctl', 'dbs','Cylinder Read','on');
+insert into TAM.gdo_changes values ('ctl', 'debug','Maximum Dumps','20');
+insert into TAM.gdo_changes values ('ctl', 'debug','Save Dumps','on');
+
+
+/*** Utility count ***/
+
+grant all on TDWM to dbc with grant option;
+
+
+SELECT * FROM TABLE (TDWM.TDWMLoadUtilStatistics()) AS t1;
+
+
+
+/*** Rebuild inmod ***/
+
+copy source codes under clearcase\CommonCode\inmod\source\datagen 
+
+mv Makefile_Linux Makefile
+
+vi Makefile to change 32 bit to 64 bit
+
+Then run make command
+#make
+
+
+
+/** build harness **/
+
+cd /qd0056/quantum/quantum_run/teradata/quantum/
+rm -rf standard
+svn checkout https://continuum.td.teradata.com/svn_repos/quantum/standard/trunk standard
+cd standard/default
+mvn clean
+mvn install
+mvn package
+mvn package -P publish
+
+qf@qd0056[11:24:05]:/qd0056/quantum/quantum_run/tl151006/15.10-trunk>mvn clean
+qf@qd0056[11:24:42]:/qd0056/quantum/quantum_run/tl151006/15.10-trunk>mvn package
+qf@qd0056[11:25:56]:/qd0056/quantum/quantum_run/tl151006/15.10-trunk>mvn package -P publish
+
+
+cd /var/opt/quantum_run/test/harness
+
+cd /qd0056/quantum/quantum_run/test/harness
+
+tar jcvf sittests-1111151650.tar.gz task
+
+mv sittests-1111151650.tar.gz /quantumfs/common/SIT/SIT_Tests
+
+cd /quantumfs/common/SIT/SIT_Tests
+
+
+
+cd /qd0056/quantum/quantum_run/tl151006/15.10-trunk
+
+mvn clean
+mvn package
+mvn package -P publish
+
+cd /qd0056/quantum/quantum_run/test/
+
+tar jcvf sitharness-5.4-0115161637.tar.gz harness
+
+
+
+
+mv sitharness-5.2-1111151700.tar.gz /quantumfs/common/SIT
+
+
+sitharness-5.4-0115161637.tar.gz
+
+
+cd /quantumfs/common/SIT
+ 
+
+tar -xvjf sitharness-0723141521.tar.gz
+
+
+tar -xvjf sitharness-0718141521.tar.gz
+
+svn checkout https://continuum.td.teradata.com/svn_repos/quantum/test_assets_unsupported_load_isolation_explicitload/trunk load
+
+svn checkout https://continuum.td.teradata.com/svn_repos/quantum/test_assets_unsupported_sit/branches/15.00/active 15.00-trunk
+svn checkout https://continuum.td.teradata.com/svn_repos/quantum/test_assets_unsupported_sit sit-all
+svn checkout https://continuum.td.teradata.com/svn_repos/quantum/test_assets_unsupported_sit/trunk 15.10-trunk
+
+svn checkout https://continuum.td.teradata.com/svn_repos/quantum/test_assets_unsupported_sit/trunk 15.10-trunk 
+ 
+
+svn checkout https://continuum.td.teradata.com/svn/SIT/src/quantum/sitq/trunk new-trunk
+
+
+svn checkout  https://continuum.td.teradata.com/svn/SIT/src/jmeter/trunk/ jmeter-svn
+
+
+svn cp https://continuum.td.teradata.com/svn/SIT/src/quantum/sitq/trunk https://continuum.td.teradata.com/svn/SIT/src/quantum/sitq/branches/15.10 -m "new 15.10 branch"
+
+
+svn move https://continuum.td.teradata.com/svn/SIT/src/quantum/sitq/branches/15.10 https://continuum.td.teradata.com/svn/SIT/src/quantum/sitq/branches/15.10-archive
+
+
+svn checkout https://continuum.td.teradata.com/svn_repos/quantum/test_assets_unsupported_sit/branches/2015 test
+
+
+svn checkout https://continuum.td.teradata.com/svn_repos/quantum/controls_unsupported_sit sit-control-files
+
+cd /qd0056/quantum/quantum_run/monopoly/harness/etc/scheduler/factory/sit_job_templates_repo/sitq_prod
+
+cp 15.10_mpp_prod_job.yaml ../../sitr/job.yaml
+
+cd ../../sitr
+
+
+cp sitdev_job.yaml ../sitdev/job.yaml
+
+
+cd /qd0056/quantum/quantum_run/baja/harness/etc/scheduler/factory/sitr
+
+cp template_mapper.yaml mapper.yaml
+
+cp sitr_participant.yaml participant.yaml
+
+
+sed -i 's/sit_tdc/squirt.labs.teradata.com/g' job.yaml
+
+sed -i 's/sit_tdc/hela/g' job.yaml
+
+sed -i 's/sit_agent/qd0051/g' mapper.yaml
+
+sed -i 's/sit_agent/qd0056/g' mapper.yaml
+
+
+
+
+/*** Create soft link, don't use mount ***/
+
+cd /opt/teradata/client/
+rm -rf latest
+mkdir latest
+ln -s /opt/teradata/client/15.10/* /opt/teradata/client/latest
+
+/*** FOR TPT ***/
+
+ln -s /opt/teradata/client/15.10/bin/tbuild /opt/teradata/client/latest/tbuild/bin
+
+unlink /opt/teradata/client/latest/tbuild/bin/tbuild <-- remove SymLink
+
+
+chmod 755 /opt/teradata/client/latest
+
+
+
+cd /qd0056/quantum/quantum_run/monopoly/harness/variation/sit/15.10/templates/sitq_prod
+
+cp * /qd0056/quantum/quantum_run/monopoly/harness/variation/sit/15.10
+
+
+cd /qd0056/quantum/quantum_run/monopoly/harness/variation/sit/15.10
+
+vi mpp_setup_variation.yaml
+vi mpp_test_variation.yaml
+vi common_variation.yaml
+
+
+Login as root and start agent..
+crontab -u qf -e
+
+* * * * * perl /qd0056/quantum/quantum_run/tam/harness/bin/agent.pl --factory=tam > /qd0056/quantum/agent/log/agent_log_tam/agent_log_tam.$$.log 2>&1
+* * * * * perl /qd0051/quantum/quantum_run/harness/bin/agent.pl --factory=sitm > /qd0051/quantum/agent/log/agent_log_sitm/agent_log_sitm.$$.log 2>&1
+
+/qd0053/quantum/quantum_run
+sitq_sea_setup
+
+/qd0053/quantum/agent/log/agent_log_sitdev/agent_sitdev.
+
+
+/qd0048/quantum/quantum_run/lego/harness/etc/scheduler/factory/lego
+
+/usr/bin/perl /qd0048/quantum/quantum_run/lego/harness/bin/scheduler.pl --factory=lego --job=ecoq_etl_test --user=tl151006 --wait
+
+
+/usr/bin/perl /qd0048/quantum/quantum_run/cosmos/harness/bin/scheduler.pl --factory=cosmos --job=ecoq_etl_test --user=tl151006 --wait
+
+
+sitq_gdo_dbql
+sitq_sea_setup
+sitq_datacheck
+sitq_adw1_test
+sitq_mpp_prod_test
+sitq_omw_test
+
+
+/usr/bin/perl /qd0056/quantum/quantum_run/tam/harness/bin/scheduler.pl --factory=tam --job=phython_test --user=tl151006 --wait
+
+
+/usr/bin/perl /qd0051/quantum/quantum_run/squirt/harness/bin/scheduler.pl --factory=sitdev --job=sitq_adw1_test --user=tl151006 --wait
+
+/usr/bin/perl /qd0051/quantum/quantum_run/squirt/harness/bin/scheduler.pl --factory=sitdev --job=sitq_sea_setup --user=tl151006 --wait
+/usr/bin/perl /qd0051/quantum/quantum_run/squirt/harness/bin/scheduler.pl --factory=sitdev --job=sitq_etl_test --user=tl151006 --wait
+/usr/bin/perl /qd0051/quantum/quantum_run/squirt/harness/bin/scheduler.pl --factory=sitdev --job=sitq_mpp_prod_test --user=tl151006 --wait
+
+
+/usr/bin/perl /qd0051/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --job=sitq_gdo --user=tl151006 --wait
+
+/usr/bin/perl /qd0051/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --job=sitq_sea_setup --user=tl151006 --wait
+
+/usr/bin/perl /qd0051/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --job=sitq_etl_test --user=tl151006 --wait
+
+/usr/bin/perl /qd0051/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --job=sitq_etl_test --user=tl151006 --wait
+/usr/bin/perl /qd0051/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --job=sitq_mpp_prod_test --user=tl151006 --wait
+
+
+/usr/bin/perl /qd0051/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitm --job=sitq_etl_test --user=tl151006 --wait
+
+
+/usr/bin/perl /qd0051/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --job=sitq_sea_setup --user=tl151006 --wait
+
+/usr/bin/perl /qd0051/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --job=sitq_dev --user=tl151006 --wait
+
+/usr/bin/perl /qd0056/quantum/quantum_run/monopoly/harness/bin/scheduler.pl --factory=sitr --job=sitq_mpp_prod_test --user=tl151006 --wait
+
+
+/usr/bin/perl /qd0056/quantum/quantum_run/monopoly/harness/bin/scheduler.pl --factory=sitr --job=sitq_mpp_prod_test --user=tl151006 --wait
+
+
+/usr/bin/perl /qd0056/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --job=phython_test --user=tl151006 --wait
+
+
+/usr/bin/perl /qd0051/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --job=sit_dev --user=tl151006 --wait
+
+/usr/bin/perl /qd0056/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --job=sitq_mpp_prod_test --user=tl151006 --wait
+
+
+
+/usr/bin/perl /qd0056/quantum/quantum_run/shine/harness/bin/scheduler.pl --factory=sitdev --job=sitq_mpp_prod_test --user=tl151006 --wait
+
+/usr/bin/perl /qd0056/quantum/quantum_run/shine/harness/bin/scheduler.pl --factory=sitdev --job=sitq_omw_test --user=tl151006 --wait
+
+
+/usr/bin/perl /qd0056/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --job=sitq_sqlh_sz_test --user=tl151006 --wait
+
+/usr/bin/perl /qd0056/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --job=sitq_sqlh_sz_test --user=tl151006 --wait
+
+/usr/bin/perl /qd0056/quantum/quantum_run/baja/harness/bin/scheduler.pl --factory=sitr --job=sitq_mpp_atf_setup --user=tl151006 --wait
+
+/usr/bin/perl /qd0056/quantum/quantum_run/newpec/harness/bin/scheduler.pl --factory=sitr --job=sitq_mpp_atf_setup --user=tl151006 --wait
+
+/usr/bin/perl /qd0056/quantum/quantum_run/baja/harness/bin/scheduler.pl --factory=sitr --job=sitq_mload_atf_test --user=tl151006 --wait
+
+
+/usr/bin/perl /qd0051/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --command='show active work'
+
+/usr/bin/perl /qd0056/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --command='show active work where exists database_system { host = "hela" }'
+
+/usr/bin/perl /qd0056/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --command='show active work where exists database_system { host = "moon" } mail brief to "tl151006"'
+
+
+/usr/bin/perl /qd0056/quantum/quantum_run/harness/bin/scheduler.pl --factory=sitr --command='show active work where exists database_system { host = "moffett1" }'
+
+/usr/bin/perl /qd0051/quantum/quantum_run/harness/bin/scheduler.pl --factory=sitdev --command='show active work where exists database_system { host = "hela" } mail brief to "tl151006"'
+
+
+/usr/bin/perl /qd0056/quantum/quantum_run/baja/harness/bin/scheduler.pl --factory=sitr --command='show active work where exists database_system { host = "newpec1" } mail brief to "tl151006"'
+
+/usr/bin/perl /qd0056/quantum/quantum_run/monopoly/harness/bin/scheduler.pl --factory=sitr --command='show active work where exists database_system { host = "monopolycop1" } mail brief to "tl151006"'
+
+
+/usr/bin/perl /qd0051/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --command='show active work where owner="tl151006" mail brief to "tl151006"'
+
+/usr/bin/perl /qd0051/quantum/quantum_run/squirt/harness/bin/scheduler.pl --factory=sitdev --command='show active work where owner="tl151006"'
+
+/usr/bin/perl /qd0056/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitr --command='show active work mail brief to "tl151006"'
+
+
+/usr/bin/perl /qd0048/quantum/quantum_run/cosmos/harness/bin/scheduler.pl --factory=cosmos --job=ecoq_etl_test --user=tl151006 --wait
+/usr/bin/perl /qd0048/quantum/quantum_run/cosmos/harness/bin/scheduler.pl --factory=cosmos --command="cancel subjob where exec id='8572a7061b8011e58ce1e2c5d441519e'"
+
+/qd0040/quantum/quantum_run/accord/harness/etc/scheduler/factory/sitr
+
+/usr/bin/perl /qd0040/quantum/quantum_run/accord/harness/bin/scheduler.pl --factory=sitr --job=sitq_mpp_prod_test --user=tl151006 --wait
+/usr/bin/perl /qd0040/quantum/quantum_run/accord/harness/bin/scheduler.pl --factory=sitr --job=sitq_omw_test --user=tl151006 --wait
+
+
+/qd0040/quantum/quantum_run/accord/harness/variation/sit/15.10
+edit common_variation.yaml and add your QID for email report.
+edit sitq_mpp_test_variation.yaml and change sitq_omw_duration_in_day to whatever duration you want to run, curreltly set to 3 days.
+
+
+/usr/bin/perl /qd0056/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --command="cancel job where exec id='e9e9280a96b411e48de83521b15e2584'"
+
+/usr/bin/perl /qd0056/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --command="cancel subjob where exec id='3a798220bd4711e49bb6e013d541519e'"
+
+/usr/bin/perl /qd0051/quantum/quantum_run/hela/harness/bin/scheduler.pl --factory=sitdev --command="cancel subjob where exec id='46ca1600bd4911e49b082820d541519e'"
+
+cd /quantumfs/common/SIT
+
+tar jcvf sittests-0820141712.tar.gz task
+
+mv sittests-0724141221.tar.gz /quantumfs/common/SIT
+
+tar jcvf sitharness-0820141718.tar.gz harness
+
+mv sitharness-0820141718.tar.gz /quantumfs/common/SIT
+
+
+tar -xvjf sitharness-0723141521.tar.gz
+
+tar -xvjf sitharness-0718141521.tar.gz
+
+
+crontab -u qf -e
+
+
+tar jcvf test1.tar.gz test
+
+
+
+tar jcvf sitatam.tar.gz harness
+
+
+
+/usr/bin/perl /qd0056/quantum/quantum_run/harness/bin/scheduler.pl --factory=sitdev --command='show active work where exists database_system { host = "newpeccop1" }' > active_work.out
+
+
+
+ [% sit_testdata_dir %]/sitq_sea_omw/role:dbs_server/active_work_omw_clean.out
+
+
+
+grep "Subjob name: sitq_sea_omw_test" active_work.out > active_work_omw.out
+
+
+create multiset table show_active_work, fallback
+ (sitq_sea_omw varchar(200) default '0')
+ primary index (sitq_sea_omw);
+
+
+
+.logon newpec/tam_test
+
+.import vartext '' file=[% sit_testdata_dir %]/sitq_sea_omw/role:dbs_server/active_work_omw_clean.out
+
+.repeat*
+
+
+using s1(varchar(200)) insert into show_active_work (sitq_sea_omw) values (:s1);
+
+
+select * from sitq_sea_omw where sitq_sea_omw like '%sitq_sea_omw_test%';
+
+create multiset table sitq_sea_omw, fallback
+ (sitq_sea_omw varchar(200) default '0')
+ primary index (sitq_sea_omw);
+
+
+delete from sitq_sea_omw;
+
+select * from sitq_sea_omw;
+
+select count (*) from show_active_work;
+
+
+sed 's/ //g' active_work_omw.out > active_work_omw1
+
+
+sitq_sea_omw_active_work.bteq
+
+sitq_sea_omw_active_run.sql
+
+
+/usr/bin/perl /qd0056/quantum/quantum_run/tl151006/harness/bin/scheduler.pl --factory=sitdev --job=sitq_sea_omw_test --user=tl151006 --wait
+
+
+.os rm tam5
+
+.export data file=tam5
+
+select cast(random(1,500) as int) (title'');
+
+.EXPORT RESET
+
+.import data file=tam5
+
+using s1(int) select :s1;
+
+
+
+SIT_PDM                             167,957,554,176      199,999,999,980
+
+
+
+- sitq_sqlh_sz/test/workload/vendor/update_orders/update_orders.bteq:
+   clones: $sitq_sqlh_sz_vendors
+
+
+
+/*** arcmina ***/
+
+/TQE/Logs/2014-11-21_112754_SHINE
+
+vi ARC_COPY_10650.arc
+
+
+logon SHINE/dbc,dbc;
+SET QUERY_BAND = 'ARCLOGFILE=:TQEDataLoader:SEA_150GB:newbarsit2:/TQE/Logs/2014-11-21_112754_SHINE/ARC_COPY_10650.arc_output_filename;';
+COPY DATA TABLES
+(SIT_PDM) (REPLACE CREATOR)
+,release lock
+,file=ARCPIPE;
+LOGOFF;
+
+
+
+system("$arcmain ${ARCDEBUG} CHECKPOINT=0 LINEWRAP=255 SESSIONS=${num_ARC_sessions} < $arc_script_filename > $arc_script_output_filename");
+
+
+arcmain FILEDEF(archive,/home/tam/abc.out) < input_script > output_file
+
+
+arcmain < hela_copy.arc > hela.out
+
+arcmain < hela_copy.arc 
+
+/*** Example hela_copy.arc ***>
+.logon hela/SIT_Kelly_Temporal,SIT_Kelly_Temporal;
+archive data tables (skt_prod_tbls_kdw.TM_PRD),
+release lock,
+file=SKTTMPRD;
+.logoff;
+
+
+
+mkfifo ARCPIPE
+mknod returntranlinepipe p
+
+/usr/bin/gunzip -c SEA_20GB.arc.gz >  ARCPIPE &
+
+
+create user tam as perm = 1000, password = tam;
+
+
+grant all on SIT_PDM to tam with grant option;
+
+
+
+
+
+
+
+
+master_detail_status_file"
+
+
+mkfifo ARCPIPE
+
+/usr/bin/gunzip -c /TQE/Customer_NPARC_Assets/SEA_150GB.arc.gz >  ARCPIPE &
+
+/usr/bin/gunzip -c SEA_20GB.arc.gz >  ARCPIPE &
+
+
+/*** SEA DATA SETUP NEED TO LOGIN AS ROOT password is sitradmin ***/
+
+
+mkdir /local/sea_data/qd0056
+mkdir /local/sea_data/newbarsit1/array10
+mkdir /local/sea_data/newbarsit1/array11
+
+
+mount -r newbarsit1:/Array10 /local/sea_data/newbarsit1/array10
+mount -r newbarsit1:/Array11 /local/sea_data/newbarsit1/array11
+mount -r qd0056:/qd0056/quantum/datafiles/sea_data /local/sea_data/qd0056
+
+
+ln -s /local/sea_data/newbarsit1/array11/SEA_150GB.arc.gz /local/sea_data/newbarsit1
+ln -s /local/sea_data/newbarsit1/array11/SEA_20GB.arc.gz /local/sea_data/newbarsit1
+ln -s /local/sea_data/newbarsit1/array10/SEA_1TB.arc.gz /local/sea_data/newbarsit1
+
+
+
+
+Made sure you see these 3 files SEA_150GB.arc.gz, SEA_1TB.arc.gz, and SEA_20GB.arc.gz
+
+under /local/sea_data/qd0056 and /local/sea_data/newbarsit1
+
+
+
+umount /local/sea_data/qd0056 <--- un-mount
+
+
+/*** Inital MAVIN setup ***/
+
+cd  /qd0056/quantum/quantum_run/tam
+
+cp ~/.m2/settings.xml /qd0056/quantum/quantum_run/tam
+
+
+
+edit settings.xml
+
+change  <publish.dir> to your prefered location for the new build.
+
+<username> and <password> are not needed so don't to change.
+
+
+svn checkout https://continuum.td.teradata.com/svn_repos/quantum/test_assets_unsupported_sit/trunk 15.10_stuff
+
+cd 15.10_stuff
+
+mvn clean --settings /qd0056/quantum/quantum_run/tam/settings.xml
+mvn package --settings /qd0056/quantum/quantum_run/tam/settings.xml
+mvn package -P publish --settings /qd0056/quantum/quantum_run/tam/settings.xml
+
+
+
+
+
+
+
+/*** INNSATLL TTU /qd0056/quantum/TTU/1510 ***/
+#Validate what client packages will be removed on each node 
+/home/iumb_beta1_to_beta2_client_cleanup.sh noremove all priorto 15.10.00.02
+
+# Run the script this time removing all the packages
+/home/iumb_beta1_to_beta2_client_cleanup.sh all priorto 15.10.00.02
+
+
+cd /qd0051/quantum/pkgs
+rpm -ivh TeraGSS_linux_x64-15.10m.00.202-1.noarch.rpm
+rpm -U --nodeps --force cliv2-15.10f.00.00-1.noarch.rpm
+rpm -U --nodeps --force tdicu-15.10d.00.00-1.noarch.rpm
+rpm -U --nodeps --force piom-15.10e.00.00-1.noarch.rpm
+rpm -U --nodeps --force tdodbc-15.10e.00.00-1.noarch.rpm
+rpm -U --nodeps --force bteq-15.10m.00.00-1.i386.rpm
+rpm -U --nodeps --force fastexp-15.10d.00.00-1.i386.rpm
+rpm -U --nodeps --force fastld-15.10d.00.00-1.i386.rpm
+rpm -U --nodeps --force mload-15.10d.00.00-1.i386.rpm
+rpm -U --nodeps --force teradata_arc-15.10j.00.00-1.noarch.rpm
+
+
+/*** create soft links for sql driver to work ***/
+
+cd /usr/lib64 
+ln -s /opt/teradata/client/15.10/lib64/libcliv2.so libcliv2.so
+
+qf@qd0056[16:29:46]:/usr/lib64>ls -l libcliv2.so
+lrwxrwxrwx 1 root root 44 Jan 16 16:18 libcliv2.so -> /opt/teradata/client/15.10/lib64/libcliv2.so
+
+
+
+/*** check for descendants database ***/
+
+with recursive descendants(DatabaseName, DBPath, Level) as
+(select DatabaseName, cast(databasename as varchar(20)) as dbpath, 0
+      from DBC.databasesv
+     where DatabaseName = 'SIT_User' 
+    union all
+    select c.DatabaseName, p.DBPath || '>' || c.DatabaseName, p.Level + 1
+      from DBC.databasesv c, descendants p
+     where p.DatabaseName = c.OwnerName
+       and c.DatabaseName <> 'SIT_User')
+select DatabaseName
+  from descendants 
+ order by DBPath;
+
+
+/*** Find and replace with sed in directory and sub directories ***/
+
+find ./ -type f -exec sed -i -e 's/dbc,dbc/dbc,[% dbcpassword %]/g' {} \;
+
+
+
+/**** Format ***/
+
+sel cast(sum(maxperm) as decimal(36,2) FORMAT 'ZZZ,ZZZ,ZZZ,ZZZ,ZZZ,ZZZ,ZZZ'), 
+cast(sum(maxspool) as decimal(36,2) FORMAT 'ZZZ,ZZZ,ZZZ,ZZZ,ZZZ,ZZZ,ZZZ'), 
+cast(sum(peakspool) as decimal(36,2) FORMAT 'ZZZ,ZZZ,ZZZ,ZZZ,ZZZ,ZZZ,ZZZ')
+from dbc.diskspace;
+
+
+
+/*** language support ***/
+
+From your machine, logon to BTEQ:
+1)	select * from dbc.chartranslations order by 1;   /* you will see the list of  CharSetName, CharSetId, InstallFlag)
+2)	Look at which charset do you want to install, then submit this SQL:
+update dbc.chartranslationsV set installflag = 'Y' where charsetid = 118;
+3)	tpareset –f     TO install the new charset 
+
+
+SEL * FROM dbc.dbcinfoV WHERE infokey = 'LANGUAGE SUPPORT MODE';
+
+
+
+
+
+
+/*** TDWM Rule ***/
+
+SELECT * FROM TABLE (TDWM.TDWMLoadUtilStatistics()) AS t1;
+
+ *** Query completed. 19 rows found. 3 columns returned.
+ *** Total elapsed time was 1 second.
+
+SELECT * FROM TABLE (TDWM.TDWMLoadUtilStatistics()) AS t1;
+
+ *** Query completed. 19 rows found. 3 columns returned.
+ *** Total elapsed time was 1 second.
+
+UtilityType  UtilityCount  UtilityLimit
+-----------  ------------  ------------
+ML/FL                  20            30
+MLoad                  10            30
+FLoad                  10            30
+FastExport             10            60
+ARC                     0           350
+SA MLoad                0            30
+SA FLoad               10            30
+SA FExp                10            60
+TPT Update             10            30
+TPT Load                0            30
+TPT Export              0            60
+JDBC MLoad              0            30
+JDBC FLoad              0            30
+JDBC FExp               0            60
+CSP FLoad               0            30
+DSA                     0           350
+DSABKUP                 0           350
+DSAREST                 0           350
+MLOADX                  0            30
+
+
+
+
+Enable
+
+UtilityType  UtilityCount  UtilityLimit
+-----------  ------------  ------------
+ML/FL                   0            30
+MLoad                   0            30
+FLoad                   0            30
+FastExport             10            60
+ARC                     0           350
+SA MLoad                0            10
+SA FLoad                0            10
+SA FExp                 0            10
+TPT Update              0            10
+TPT Load                0            10
+TPT Export             10            10
+JDBC MLoad              0            10
+JDBC FLoad              0            10
+JDBC FExp               0            10
+CSP FLoad               0            10
+DSA                     0           350
+DSABKUP                 0           350
+DSAREST                 0           350
+MLOADX                  0            10
+
+
+1. mload insert to empty table 80% X 1
+
+2. tpump inset .1% X 10 = 1%
+
+3. tpump upsert .5% X 1 
+
+4. mload upsert 1% X 5
+
+5. Final mload insert whatever left over about 24.5%
+
+
+
+ Host   Session  PE     DBC User ID
+ -----  -------  -----  -------------------------------
+     1  2584739  30718  SITQ_ETL_USER2
+
+State Detail: Session involved in MLOAD Utility
+MLoadX Phase: Application.
+Task Running: Apply Task
+
+Statements Dispatched  Time     CPU Usage     Accesses
+---------- ----------  -------- ------------- -------------
+         1          1  20:58:56    55,271,980   201,213,378
+
+DataBase.Table       = SIT_STAGE.WT_SALES_TRANSACTION_LINE_PI1
+Action               = Process Secondary Index
+# of WorkRows applied         =     320,000,000
+Total # of WorkRows           =     320,000,000
+# of NUSI change rows applied =     352,245,726
+Total # of NUSI change rows   =     960,000,000
+
+
+State Detail: Session involved in MLOAD Utility
+MLoad Phase : Application.
+Task Running: Apply Task
+
+Statements Dispatched  Time     CPU Usage     Accesses
+---------- ----------  -------- ------------- -------------
+         1          1  09:12:07   570,530,648 1,365,675,123
+
+DataBase.Table       = SIT_STAGE.WT_SALES_TRANSACTION_LINE_PI1
+Action               = Process Secondary Index
+# of WorkRows applied         =   3,360,000,000
+Total # of WorkRows           =   3,360,000,000
+# of NUSI change rows applied =   3,448,314,440
+Total # of NUSI change rows   =  10,080,000,000
+
+
+/*** 150 gig ***/
+No SI and NO PARTITION 0:01:38:31
+3 Si + 1 PARTITION 08:30:54
+1 PARTITION no SI 0:02:13:16
+1 PARTITION 1 SI 0:02:43:55
+1 PARTITION 2 SI 0:03:05:36
+
+1 SI 0:03:05:36 6 hours, 25 minutes, 52 seconds
+
+
+200000000
+2100000000
+
+
+Harness duration was 0:01:46:46 - 6406 total seconds - (0 days,  1 hours, 46 minutes, 46 seconds)
+
+
+
+
