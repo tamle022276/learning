@@ -1,0 +1,151 @@
+/** set atom as default editor ***/
+https://help.github.com/articles/associating-text-editors-with-git/
+git config --global core.editor "atom --wait"
+
+/*** First setup from git bash ***/
+
+$ git config --global credential.helper cache <--- clear old username and password
+
+
+$ git init <-- initial empty git
+
+$ git add filename or folder name <--- commit to empty git
+
+$ git remote add origin https://github.com/tamle022276/python.git
+
+
+$ git commit -m "first commit"
+
+$ git push -u origin master <--- if repo already checkout
+
+
+
+$ git config
+$ git config --global user.name "tamle022276"
+$ git config --global user.enail tamle022276@gmail.com
+$ git config --global core.autocrlf true <-- for window
+$ git config --global core.autocrlf input <-- for linux and max
+$ git config --global push.default simple
+$ cd /Desktop/git
+$ git clone https://github.com/tamle022276/python.git
+$ cd awesome-june-class
+$ git branch
+$ git branch --all  <-- list all available branches
+$ git checkout tl151006
+# now you can edit file usining eclipse or any edit editor.
+# need to look at atom then use atom editor
+
+# uae eclipse to edit and save file
+
+$ git status
+
+$ git add tl151006.md
+
+$ git status <-- compare from last status
+
+$ git commit <-- only commit to local branch
+
+# Edit commit message and save
+
+$ git push <-- push to github.com, need login and password
+
+# merge branch to master on web
+
+$ git checkout master
+
+$ git pull <--- just like sub update
+
+$ git branch --all 
+
+$ git fetch --prune <-- delete local branch
+
+$ git branch --merged
+
+$ git branch -d heenamore-recommends <--- delete remote tracking branch
+
+$ git config --global fetch.prune true <-- auto delete remote branch
+
+$ git branch --merged <--- see what merged in master
+
+$ git branch tl151006-more <-- create branch local
+
+$ git checkout tl151006-more <-- checkout branch
+
+$ git add -A <-- short cut add file
+
+$ git commit -m "adding new file" <-- shortcut to commit file without edit message file
+
+$ git push -u origin tl151006-more <-- push the branch to github to master "origin" and create relationship
+
+$ git remote -v <-- see what name of master (v = verbose)
+
+$ git add . <--- add all changes
+
+$ git config --global credential.helper wincred <-- add password so we don't have to enter password everytime
+
+$ git merge tl151006-more <-- merge your branch locally, you need to push it to remote server after  merge
+
+$ git push <-- push codes to remote
+
+$ git checkout -b readme-updates <-- shortcut to create branch and checkout branch
+
+$ git push -u origin readme-updates
+# origin is the name of the remote https://github.com/tl151006/github-games.git
+
+$ git remote set-head origin gh-pages <-- change default branch to gh-pages
+
+$ git branch -d readme-updates <-- delete branch
+
+$ git log -p gh-pages..stats-update <-- see different between branches
+
+$ git remote add heenamore https://github.com/heenamore/github-games.git <-- add repository from url
+$ git remote remove heenamore <-- delete remote reposotory
+
+$ git pull heenamore <-- pull from new repo
+
+$ git checkout -b heenamore-shape-colors remotes/heenamore/shape-colors <-- create new branch and switch new branch
+
+$ git commit -a -m "changing @heenamore shape colors" <-- add and commit the same time, make sure all file when run status you want to add
+
+$ history <-- history of all commands
+
+$ git revert id 
+
+$ git add -p <-- see the diffrent
+$ git diff HEAD
+
+$ touch file1.md file2.md file3.md file4.md <-- create multiple empty file
+
+$ git add *1* <-- add file with wildcard
+
+$ git commit -m "adding file 1"
+
+$ git init practice-repo <-- create empty repo
+
+$ git reset --soft HEAD~2 <-- need more info about reset soft, mixed and hard
+
+$ git reflog <--- log of every HEAD that changes
+
+$ git cherry-pick b8ade19 <-- get single file back
+
+# learn git rebase
+
+$ git log <--- show all logs
+$ git log --oneline
+$ git log -p
+$ git log --oneline --graph
+$ git log --oneline --graph --decorate --all
+$ git config --global alias.lol "log --oneline --graph --decorate --all" <--- create alias
+$ git lol <-- run alias 
+
+
+/** create pull request from web ***/
+1. Go to your branch
+2. Click on "new pull request"
+3. Fill out comments and click on create pull request"
+4. Click on "Pull Reqyest" and start working file, edit, commit, send message under "conversation"
+
+# Fork: copy all repository from other to you (usually when you don't have permission to original repository)
+# Branch must be unique even on local
+
+#heenamore-recommends
