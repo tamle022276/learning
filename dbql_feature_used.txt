@@ -1,0 +1,13 @@
+/** Cleanup DBQL ***/
+DELETE FROM DBQLExplainTbl;
+DELETE FROM DBQLObjTbl;
+DELETE FROM DBQLogTbl;
+DELETE FROM DBQLSqlTbl;
+DELETE FROM DBQLStepTbl;
+DELETE FROM DBQLXMLTbl;
+
+Flush Query Logging with ALL;
+
+# Run test
+
+select cast(featurename as char(50)) as FEATURENAME, FEATUREUSECOUNT from DBC.QryLogFeatureUseCountV order by 2 desc,1 asc;
